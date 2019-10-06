@@ -10,13 +10,36 @@
 
 </head>
 <body>
-    <p>
-        <span th:text="#{toppage.welcome}"></span>
-        <span custom-tag:login-user></span>
-    </p>
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark" style="background-color: #0070C0;"><!-- ★ -->
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/toppage}">
+                    <span>Spring Boot Template</span><!-- ★ -->
+                </a>
+            </div>
 
-    <form method="post" th:action="@{/logout}">
-         <input type="submit" value="logout">
-    </form>
+            <div class="navbar-collapse collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link waves-effect waves-light" th:href="@{/}">何か</a><!-- ★ -->
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link waves-effect waves-light" th:href="@{/settings}">設定</a><!-- ★ -->
+                    </li>
+                </ul>
+
+                <div class="right-nav">
+                    <span custom-tag:login-user></span>
+                    <form method="post" th:action="@{/logout}">
+                        <input type="submit" value="logout"><!-- ★ -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
 </body>
 </html>
