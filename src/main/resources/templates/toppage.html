@@ -13,15 +13,15 @@
     <nav class="navbar fixed-top navbar-expand-md navbar-dark" style="background-color: #0070C0;"><!-- ★ -->
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" th:href="@{/toppage}">
-                    <span>Spring Boot Template</span><!-- ★ -->
+                    <span th:text="#{common.product}"></span>
                 </a>
             </div>
 
-            <div class="navbar-collapse collapse" id="navbar-content">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ">
                         <a class="nav-link waves-effect waves-light" th:href="@{/}">何か</a><!-- ★ -->
