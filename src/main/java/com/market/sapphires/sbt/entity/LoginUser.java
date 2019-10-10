@@ -1,5 +1,6 @@
 package com.market.sapphires.sbt.entity;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
@@ -30,28 +31,35 @@ public class LoginUser implements UserDetails {
     @Setter
     private long id;
 
+    @Column(unique = true)
     @Getter
     @Setter
-    @Column(unique = true)
     private String username;
+
+    @Getter
+    @Setter
+    private String fullname;
 
     @Getter
     @Setter
     private String password;
 
-    @Transient
     @Getter
     @Setter
-    private String passwordPlain;
+    private String comment;
 
+    @ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER)
     @Getter
     @Setter
-    @ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.DETACH }, fetch = FetchType.EAGER)
-    private Set<LoginUserGroup> authorities = new HashSet<>();
+    private Set<LoginUserGroup> groups = new HashSet<>();
 
     @Getter
     @Setter
     private boolean enabled;
+
+    @Getter
+    @Setter
+    private boolean locked;
 
     @Getter
     @Setter
@@ -67,20 +75,27 @@ public class LoginUser implements UserDetails {
     private int version;
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        this.groups.stream().forEach(g -> {
+            g.getPermissions().forEach(p -> authorities.add(p.getAuthority()));
+        });
+
+        return authorities;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
-        // TODO 自動生成されたメソッド・スタブ
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO 自動生成されたメソッド・スタブ
-        return true;
+        return !this.locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO 自動生成されたメソッド・スタブ
         return true;
     }
 

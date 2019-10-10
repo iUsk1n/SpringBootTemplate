@@ -23,7 +23,7 @@
                         <li class="nav-item ">
                             <a class="nav-link waves-effect waves-light" th:href="@{/}">何か</a><!-- ★ -->
                         </li>
-                        <li sec:authorize="hasAuthority('Administrators')" class="nav-item dropdown">
+                        <li sec:authorize="hasAuthority('USER_SHOW')" class="nav-item dropdown">
                             <a th:classappend="${main eq 'settings' ? 'active' : ''}" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span th:text="#{menu.settings}"></span>
                             </a>

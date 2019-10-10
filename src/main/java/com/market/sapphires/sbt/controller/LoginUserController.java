@@ -28,33 +28,37 @@ public class LoginUserController {
     @PostConstruct
     public void init() {
         /*
-        LoginUserGroup aUsers = new LoginUserGroup();
-        aUsers.setAuthority("Users");
-        this.aRepository.saveAndFlush(aUsers);
+        LoginUserGroup adminGroup = new LoginUserGroup();
+        adminGroup.setName("Administrators");
+        adminGroup.getPermissions().add(LoginUserPermission.USER_SHOW);
+        adminGroup.getPermissions().add(LoginUserPermission.USER_SHOW);
+        this.aRepository.saveAndFlush(adminGroup);
         
-        LoginUserGroup aAdmin = new LoginUserGroup();
-        aAdmin.setAuthority("Administrators");
-        this.aRepository.saveAndFlush(aAdmin);
+        LoginUserGroup userGroup = new LoginUserGroup();
+        userGroup.setName("Users");
+        this.aRepository.saveAndFlush(userGroup);
         
         // 現在日時
         long now = Instant.now().toEpochMilli();
         
         LoginUser admin = new LoginUser();
         admin.setUsername("test");
+        admin.setFullname("Administrator");
         admin.setPassword(new BCryptPasswordEncoder().encode("test"));
         admin.setEnabled(true);
         admin.setCreatedDate(now);
         admin.setUpdatedDate(now);
-        admin.getAuthorities().add(aAdmin);
+        admin.getGroups().add(adminGroup);
         this.uRepository.save(admin);
         
         LoginUser user = new LoginUser();
         user.setUsername("hoge");
+        admin.setFullname("User");
         user.setPassword(new BCryptPasswordEncoder().encode("hoge"));
         user.setEnabled(true);
         user.setCreatedDate(now);
         user.setUpdatedDate(now);
-        user.getAuthorities().add(aUsers);
+        user.getGroups().add(userGroup);
         this.uRepository.save(user);
         */
     }
