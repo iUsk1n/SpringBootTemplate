@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "/toppage")
-public class TopPageController {
+@RequestMapping(value = "/portal")
+public class PortalController {
 
     @GetMapping(value = { "", "/" })
     public String index(Model model) {
-        return "toppage";
+        return "portal";
     }
 
 }
