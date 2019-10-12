@@ -1,0 +1,15 @@
+.navbar {
+    background-color: #0070C0;
+}
+.page-title {
+    font-size: 1.5rem;
+    min-height: 3rem;
+}
+.main-contents {
+    padding: 4.5rem 1rem 1rem;
+}
+
+
+.dataTables_filter {
+    display: none;
+}

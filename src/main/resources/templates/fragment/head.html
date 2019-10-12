@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
+<head th:fragment="head(menu)">
+    <meta charset="UTF-8">
+
     <title th:test="#{common.product}"></title>
 
-    <link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
 
+
+
+    <link th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/webjars/datatables/1.10.19/css/dataTables.bootstrap4.min.css}" rel="stylesheet" />
     <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+
+    <script th:if="${menu ne 'login'}" th:src="@{/js/namespace.js}"></script>
+
+    <link th:if="${menu eq 'login'}" th:href="@{/css/login.css}" rel="stylesheet" />
+    <script th:if="${menu eq 'users'}" th:src="@{/js/users.js}"></script>
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <script th:inline="javascript">
+    var dataTableDefaultSettings = {
+        oLanguage : {
+            sProcessing: /*[[#{datatables.sProcessing}]]*/,
+            sLengthMenu: /*[[#{datatables.sLengthMenu}]]*/,
+            sZeroRecords: /*[[#{datatables.sZeroRecords}]]*/,
+            sInfo: /*[[#{datatables.sInfo}]]*/,
+            sInfoEmpty: /*[[#{datatables.sInfoEmpty}]]*/,
+            sInfoFiltered: /*[[#{datatables.sInfoFiltered}]]*/,
+            sInfoPostFix: /*[[#{datatables.sInfoPostFix}]]*/,
+            sSearch: /*[[#{datatables.sSearch}]]*/,
+            sUrl: /*[[#{datatables.sUrl}]]*/,
+            oPaginate: {
+                sFirst: /*[[#{datatables.oPaginate.sFirst}]]*/,
+                sPrevious: /*[[#{datatables.oPaginate.sPrevious}]]*/,
+                sNext: /*[[#{datatables.oPaginate.sNext}]]*/,
+                sLast: /*[[#{datatables.oPaginate.sLast}]]*/
+            }
+        }
+    }
+    </script>
 </head>
 </html>

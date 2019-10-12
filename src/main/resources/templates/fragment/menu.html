@@ -7,41 +7,28 @@
 </head>
 <body>
     <header th:fragment="menu(main, sub)">
-        <nav class="navbar fixed-top navbar-expand-md navbar-dark" style="background-color: #0070C0;"><!-- ★ -->
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" th:href="@{/portal}">
-                        <span th:text="#{common.product}"></span>
-                    </a>
-                </div>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+            <a th:href="@{/portal}" class="navbar-brand" th:text="#{common.product}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" th:href="@{/}">何か</a><!-- ★ -->
+                    </li>
+                    <li sec:authorize="hasAuthority('USER_SHOW')" class="nav-item dropdown">
+                        <a th:classappend="${main eq 'settings' ? 'active' : ''}" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{menu.settings}"></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a th:classappend="${sub eq 'users' ? 'active' : ''}" th:href="@{/users}" class="dropdown-item" th:text="#{menu.users}"></a>
+                        </div>
+                    </li>
+                </ul>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link waves-effect waves-light" th:href="@{/}">何か</a><!-- ★ -->
-                        </li>
-                        <li sec:authorize="hasAuthority('USER_SHOW')" class="nav-item dropdown">
-                            <a th:classappend="${main eq 'settings' ? 'active' : ''}" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span th:text="#{menu.settings}"></span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a th:classappend="${sub eq 'users' ? 'active' : ''}" class="dropdown-item" th:href="@{/users}">
-                                    <span th:text="#{menu.users}"></span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="right-nav">
-                        <span custom-tag:login-user></span>
-                        <form method="post" th:action="@{/logout}">
-                            <input type="submit" value="logout"><!-- ★ -->
-                        </form>
-                    </div>
-                </div>
+                <span custom-tag:login-user></span><!-- ★装飾 色 マージン リンク化★ -->
+                <form th:action="@{/logout}" method="post" class="form-inline mt-2 mt-md-0">
+                    <button type="submit" class="btn btn-secondary btn-sm my-2 my-sm-0" th:text="#{login.logout}"></button>
+                </form>
             </div>
         </nav>
     </header>

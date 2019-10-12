@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragment/head :: head">
+<head th:replace="fragment/head :: head('users')">
 </head>
 <body>
-    <header th:replace="fragment/menu :: menu('', '')"></header>
+    <header th:replace="fragment/menu :: menu('settings', 'users')"></header>
 
     <main>
-        <span>あ</span>
+        <div class="main-contents">
+            <div class="page-title " th:text="#{menu.title.users.list}"></div>
+
+            <table id="table-users" class="table table-striped table-bordered" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th th:text="#{users.username}"></th>
+                        <th th:text="#{users.fullname}"></th>
+                        <th th:text="#{users.enabled}"></th>
+                        <th th:text="#{users.comment}"></th>
+                        <th th:text="#{users.updateddate}"></th>
+                    </tr>
+                </thead>
+                <tbody/>
+            </table>
+        </div>
     </main>
+
+    <script th:inline="javascript">
+    $(function() {
+        var usersList = new SBT.users.list(
+            {
+                ajaxsource: /*[[@{/users/getList}]]*/
+            }
+        );
+
+        usersList.init();
+    });
+    </script>
 </body>
 </html>

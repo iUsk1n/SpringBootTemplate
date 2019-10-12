@@ -1,5 +1,7 @@
 package com.market.sapphires.sbt.controller;
 
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,20 +9,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.market.sapphires.sbt.repository.LoginUserDao;
+import com.market.sapphires.sbt.model.datatables.returned.UserDataTables;
 import com.market.sapphires.sbt.repository.LoginUserGroupDao;
 import com.market.sapphires.sbt.service.LoginUserService;
 
 @Controller
 @RequestMapping(value = "/users")
-public class LoginUserController {
+public class UserController {
 
     @Autowired
     private LoginUserService service;
-
-    @Autowired
-    private LoginUserDao uRepository;
 
     @Autowired
     private LoginUserGroupDao aRepository;
@@ -65,8 +65,18 @@ public class LoginUserController {
 
     @GetMapping(value = { "", "/", "/list" })
     public String list(Model model) {
-        //
         return "users/list";
     }
 
+    @GetMapping(value = "/getList")
+    @ResponseBody
+    public UserDataTables getList(
+            int draw,
+            int start,
+            int length,
+            Map<String, ?> columns,
+            Map<String, ?> order) {
+
+        return this.service.getList(draw, start, length, columns, order);
+    }
 }

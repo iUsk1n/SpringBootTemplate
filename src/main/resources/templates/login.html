@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="fragment/head :: head('login')">
 </head>
 <body>
-    <div th:if="${param.logout}">
-            You have been logged out.
-    </div>
-    <div th:if="${param.error}">
-            Invalid username and password.
-    </div>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+            <a th:href="@{/portal}" class="navbar-brand" th:text="#{common.product}"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <!--  -->
+                </ul>
 
-    <form th:action="@{/auth}" method="post">
-        <p>
-            username : <input type="text" name="username">
-        </p>
-        <p>
-            password : <input type="password" name="password">
-        </p>
+                <a th:href="@{/login}" class="btn btn-secondary btn-sm my-2 my-sm-0" th:text="#{login.login}"></a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="main-contents">
+            <div th:if="${param.logout}" th:text="#{login.logout.message}"></div>
+            <div th:if="${param.error}" th:text="#{login.login.failed}"></div>
 
-        <br/>
-
-        <input type="submit" value="Login">
-    </form>
+            <div class="text-center">
+                <form class="form-login" th:action="@{/auth}" method="post">
+                    <label for="username" class="sr-only" th:text="#{login.username}"></label>
+                    <input type="text" id="username" name="username" class="form-control" th:placeholder="#{login.username}" autofocus>
+                    <label for="password" class="sr-only" th:text="#{login.password}"></label>
+                    <input type="password" id="password" name="password" class="form-control" th:placeholder="#{login.password}">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        <span th:text="#{login.login}"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
