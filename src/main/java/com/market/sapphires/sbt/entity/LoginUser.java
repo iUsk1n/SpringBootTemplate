@@ -3,6 +3,7 @@ package com.market.sapphires.sbt.entity;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.Version;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.market.sapphires.sbt.util.MessageUtil;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +33,10 @@ public class LoginUser implements UserDetails {
     @Getter
     @Setter
     private long id;
+
+    public String getIdToString() {
+        return String.valueOf(this.id);
+    }
 
     @Column(unique = true)
     @Getter
@@ -53,9 +60,25 @@ public class LoginUser implements UserDetails {
     @Setter
     private Set<LoginUserGroup> groups = new HashSet<>();
 
+    public String getGroupsString() {
+        return String.join(", ",
+                this.groups.stream()
+                        .map(g -> MessageUtil
+                                .getValue(new StringBuilder("users.group.").append(g.getName()).toString()))
+                        .collect(Collectors.toList()));
+    }
+
     @Getter
     @Setter
     private boolean enabled;
+
+    public String getEnabledString() {
+        if (this.enabled) {
+            return MessageUtil.getValue("users.enabled.enable");
+        } else {
+            return MessageUtil.getValue("users.enabled.disable");
+        }
+    }
 
     @Getter
     @Setter

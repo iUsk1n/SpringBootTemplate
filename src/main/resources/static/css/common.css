@@ -9,7 +9,18 @@
     padding: 4.5rem 1rem 1rem;
 }
 
-
+.table {
+    width: 100% !important;
+}
 .dataTables_filter {
     display: none;
+}
+.table-search-pane {
+    padding-bottom: 1rem;
+}
+
+.form-group .form-check {
+    line-height: 1.5;
+    margin-top: calc(.375rem + 1px);
+    margin-bottom: calc(.375rem + 1px);
 }

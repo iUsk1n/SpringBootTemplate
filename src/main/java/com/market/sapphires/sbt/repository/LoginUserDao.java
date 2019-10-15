@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.market.sapphires.sbt.entity.LoginUser;
 
 @Repository
-public interface LoginUserDao extends JpaRepository<LoginUser, Integer> {
+public interface LoginUserDao extends JpaRepository<LoginUser, Integer>, LoginUserDaoCustom {
 
     List<LoginUser> findByUsername(String username);
 
