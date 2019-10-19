@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,5 +74,14 @@ public class UserController {
     @ResponseBody
     public UserDataTables getList(@RequestParam Map<String, String> params) {
         return this.service.getList(params);
+    }
+
+    @GetMapping(value = "/{id}")
+    public String show(Model model, @PathVariable long id) {
+        model.addAttribute("user", this.service.getDetail(id));
+
+        // TODO ex NoSuch~
+
+        return "users/show";
     }
 }

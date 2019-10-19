@@ -72,19 +72,27 @@
                         <th th:text="#{users.enabled}"></th>
                         <th th:text="#{users.groups}"></th>
                         <th th:text="#{users.comment}"></th>
-                        <th th:text="#{users.updateddate}"></th>
+                        <th th:text="#{users.updated_date}"></th>
                     </tr>
                 </thead>
                 <tbody/>
             </table>
+
+            <div id="detail" class="detail-pane">
+                <!--  -->
+            </div>
         </div>
     </main>
 
     <script th:inline="javascript">
     $(function() {
-        var usersList = new SBT.users.list(
+        var usersList = new SBT.Users.List(
             {
-                ajaxsource: /*[[@{/users/getList}]]*/
+                ajaxsource: /*[[@{/users/getList}]]*/,
+                createFrom: /*[[@{/users/createForm}]]*/,
+                show: /*[[@{/users/}]]*/,
+                updateFrom: /*[[@{/users/createForm}]]*/,
+                'delete': /*[[@{/users/delete}]]*/
             }
         );
 

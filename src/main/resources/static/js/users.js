@@ -1,15 +1,18 @@
-SBT.namespace('SBT.users.list');
+SBT.namespace('SBT.Users.List');
 
-SBT.users.list = function(urls){
+SBT.Users.List = function(urls){
     this.ENABLED_ENABLE  = 'true';
     this.ENABLED_DISABLE = 'false';
 
     this.urls = urls;
 
     this.dataTables = null;
+
+    this.jqXHR = null
+    this.usersShow = null;
 }
 
-SBT.users.list.prototype.init = function() {
+SBT.Users.List.prototype.init = function() {
     var my = this;
 
     my.dataTables = $('#table-users').DataTable($.extend({}, dataTableDefaultSettings, {
@@ -23,8 +26,32 @@ SBT.users.list.prototype.init = function() {
             {data: 'enabled'},
             {data: 'groups'},
             {data: 'comment'},
-            {data: 'updatedDate', },
-        ]
+            {data: 'updatedDate'},
+        ],
+        rowCallback: function(row, data) {
+            $(row).addClass('dataTables-row');
+            // TODO details の hidden で　selected
+            $(row).on('click', function() {
+                if (my.jqXHR) {
+                    my.jqXHR.abort();
+                    my.jqXHR = null;
+                }
+                $('#detail').empty();
+                my.usersShow = null;
+
+                my.getDetail.call(my, data.id)
+                    .done(function() {
+                        my.usersShow = new SBT.Users.Show({
+                            updateFrom: my.urls.updateForm,
+                            'delete': my.urls['delete']
+                        });
+
+                        my.usersShow.init();
+                    });
+
+                return false;
+            });
+        }
     }));
 
     $('#btn-table-users-search').on('click', function() {
@@ -41,8 +68,44 @@ SBT.users.list.prototype.init = function() {
             .column(0).search($('#table-search-username').val())
             .column(1).search($('#table-search-fullname').val())
             .column(2).search(enabled)
-            //
+            .column(3).search($('#table-search-groups').val())
             .column(4).search($('#table-search-comment').val())
             .draw();
     });
 };
+
+SBT.Users.List.prototype.getDetail = function(id) {
+    var my = this;
+
+    var deferred = new $.Deferred;
+
+    my.jqXHR = $.ajax({
+        url: my.urls.show + id,
+        dataType: 'html'
+    }).done(function(data) {
+        $('#detail').html($('<div>').append(data).find('main')[0].innerHTML);
+        deferred.resolve();
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        if(textStatus !== 'abort') {
+            console.log(my.urls.show + id + ': ' + textStatus);
+        }
+        deferred.reject();
+    }).always(function() {
+        my.jqXHR = null;
+    });
+
+    return deferred.promise();
+}
+
+
+SBT.namespace('SBT.Users.Show');
+
+SBT.Users.Show = function(urls){
+    this.urls = urls;
+}
+
+SBT.Users.Show.prototype.init = function() {
+    var my = this;
+
+    //
+}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.market.sapphires.sbt.entity.LoginUser;
+import com.market.sapphires.sbt.model.LoginUserModel;
 import com.market.sapphires.sbt.model.datatables.returned.UserDataTables;
 import com.market.sapphires.sbt.repository.LoginUserDao;
 
@@ -52,7 +53,7 @@ public class UserService {
         UserDataTables dts = new UserDataTables();
         dts.setDraw(draw);
         dts.setRecordsTotal((int) this.dao.count());
-        dts.setRecordsFiltered(2);
+        dts.setRecordsFiltered(2); // TODO
 
         dts.getData();
         users.forEach(u -> {
@@ -61,4 +62,9 @@ public class UserService {
 
         return dts;
     }
+
+    public LoginUserModel getDetail(Long id) {
+        return new LoginUserModel(this.dao.findById(id).get());
+    }
+
 }
