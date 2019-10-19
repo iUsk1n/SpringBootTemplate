@@ -1,5 +1,6 @@
 package com.market.sapphires.sbt.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "LoginUserGroup")
-public class LoginUserGroup {
+public class LoginUserGroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
