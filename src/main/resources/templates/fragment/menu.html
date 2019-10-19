@@ -25,7 +25,9 @@
                     </li>
                 </ul>
 
-                <span custom-tag:login-user></span><!-- ★装飾 色 マージン リンク化★ -->
+                <a class="nav-link menu_login-user" th:href="@{/users/info}">
+                    <span custom-tag:login-user></span>
+                </a>
                 <form th:action="@{/logout}" method="post" class="form-inline mt-2 mt-md-0">
                     <button type="submit" class="btn btn-secondary btn-sm" th:text="#{login.logout}"></button>
                 </form>

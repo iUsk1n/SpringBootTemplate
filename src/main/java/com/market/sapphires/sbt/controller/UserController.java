@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.market.sapphires.sbt.entity.LoginUser;
 import com.market.sapphires.sbt.model.datatables.returned.UserDataTables;
 import com.market.sapphires.sbt.repository.LoginUserGroupDao;
 import com.market.sapphires.sbt.service.UserService;
@@ -63,6 +65,16 @@ public class UserController {
         user.getGroups().add(userGroup);
         this.uRepository.save(user);
         */
+    }
+
+    @GetMapping(value = "/info")
+    public String info(Model model) {
+        LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", this.service.getDetail(user.getId()));
+
+        // TODO ex NoSuch~
+
+        return "users/info";
     }
 
     @GetMapping(value = { "", "/", "/list" })

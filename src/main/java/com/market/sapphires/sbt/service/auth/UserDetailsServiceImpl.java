@@ -3,7 +3,6 @@ package com.market.sapphires.sbt.service.auth;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,9 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
 
-        LoginUser user = users.get(0);
-
-        return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
+        return users.get(0);
     }
 
 }

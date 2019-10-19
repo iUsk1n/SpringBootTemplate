@@ -1,6 +1,5 @@
 package com.market.sapphires.sbt.util.customtag;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.thymeleaf.context.ITemplateContext;
 import org.thymeleaf.model.IModel;
@@ -11,6 +10,8 @@ import org.thymeleaf.processor.element.IElementTagStructureHandler;
 import org.thymeleaf.standard.StandardDialect;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.unbescape.html.HtmlEscape;
+
+import com.market.sapphires.sbt.entity.LoginUser;
 
 public class LoginUserTagProcessor extends AbstractElementTagProcessor {
 
@@ -26,12 +27,12 @@ public class LoginUserTagProcessor extends AbstractElementTagProcessor {
     @Override
     protected void doProcess(ITemplateContext context, IProcessableElementTag tag,
             IElementTagStructureHandler structureHandler) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         IModelFactory modelFactory = context.getModelFactory();
         IModel iModel = modelFactory.createModel();
         iModel.add(modelFactory.createOpenElementTag("span"));
-        iModel.add(modelFactory.createText(HtmlEscape.escapeHtml4Xml(auth.getName())));
+        iModel.add(modelFactory.createText(HtmlEscape.escapeHtml4Xml(user.getFullname())));
         iModel.add(modelFactory.createCloseElementTag("span"));
 
         structureHandler.replaceWith(iModel, false);

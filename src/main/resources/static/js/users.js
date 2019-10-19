@@ -31,7 +31,13 @@ SBT.Users.List.prototype.init = function() {
         rowCallback: function(row, data) {
             $(row).addClass('dataTables-row');
             // TODO details の hidden で　selected
+            if ($('#user-detail-id').val() === data.id) {
+                $(row).addClass('dataTables-row__selected');
+            }
             $(row).on('click', function() {
+                $('.dataTables-row__selected').removeClass('dataTables-row__selected');
+                $(this).addClass('dataTables-row__selected');
+
                 if (my.jqXHR) {
                     my.jqXHR.abort();
                     my.jqXHR = null;
